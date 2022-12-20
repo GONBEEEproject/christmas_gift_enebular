@@ -28,9 +28,9 @@ public class EnebularManager : MonoBehaviour
         string result;
         using (var request = UnityWebRequest.Get("https://lcdp003.enebular.com/download/"))
         {
-            request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
-            request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
-            request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
+            //request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
+            //request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
+            //request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
             request.SetRequestHeader("Access-Control-Allow-Origin", "*");
 
 
@@ -96,11 +96,11 @@ public class EnebularManager : MonoBehaviour
 
         byte[] postData = System.Text.Encoding.UTF8.GetBytes(json);
         var request = new UnityWebRequest("https://lcdp003.enebular.com/upload/", "POST");
-        request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
-        request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
-        request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
+        //request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
+        //request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
+        //request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
         request.SetRequestHeader("Access-Control-Allow-Origin", "*");
-        request.SetRequestHeader("Content-Type", "application/json");
+        //request.SetRequestHeader("Content-Type", "application/json");
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(postData);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
