@@ -28,6 +28,7 @@ public class EnebularManager : MonoBehaviour
         string result;
         using (var req = UnityWebRequest.Get("https://lcdp003.enebular.com/download/"))
         {
+            req.SetRequestHeader("Access-Control-Allow-Origin", "*");
             yield return req.SendWebRequest();
             result = req.downloadHandler.text;
             result = result.Remove(0, 1);
@@ -92,6 +93,7 @@ public class EnebularManager : MonoBehaviour
         var request = new UnityWebRequest("https://lcdp003.enebular.com/upload/", "POST");
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(postData);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Access-Control-Allow-Origin", "*");
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
 
