@@ -28,24 +28,21 @@ public class EnebularManager : MonoBehaviour
         string result;
         using (var request = UnityWebRequest.Get("https://lcdp003.enebular.com/download/"))
         {
-            //request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
-            //request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
-            //request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
-            request.SetRequestHeader("Access-Control-Allow-Origin", "*");
-
-
             yield return request.SendWebRequest();
             result = request.downloadHandler.text;
+            Debug.Log(result);
+            
             result = result.Remove(0, 1);
             result = result.Remove(result.Length - 1, 1);
 
-            string[] splited = result.Split(",");
 
-            for (int i = 0; i < splited.Length; i += 2)
+            string[] s = result.Split(",");
+
+            for (int i = 0; i < s.Length; i += 2)
             {
-                string s1 = splited[i];
+                string s1 = s[i];
+                string s2 = s[i + 1];
                 s1 = s1.Replace("\"", "");
-                string s2 = splited[i + 1];
                 s2 = s2.Replace("\"", "");
                 MakeGift(s1, s2);
                 yield return new WaitForSeconds(0.2f);
@@ -80,7 +77,6 @@ public class EnebularManager : MonoBehaviour
         string s1 = nameText.text;
         string s2 = commentText.text;
 
-
         if (s1 == "")
         {
             s1 = " ";
@@ -92,15 +88,10 @@ public class EnebularManager : MonoBehaviour
         }
 
         string json = $"[\"{s1}\",\"{s2}\"]";
-        Debug.Log(json);
 
         byte[] postData = System.Text.Encoding.UTF8.GetBytes(json);
         var request = new UnityWebRequest("https://lcdp003.enebular.com/upload/", "POST");
-        //request.SetRequestHeader("Access-Control-Allow-Credentials", "true");
-        //request.SetRequestHeader("Access-Control-Allow-Headers", "Accept, X-Access-Token, X-Application-Name, X-Request-Sent-Time");
-        //request.SetRequestHeader("Access-Control-Allow-Credentials", "GET, POST, OPTIONS");
-        request.SetRequestHeader("Access-Control-Allow-Origin", "*");
-        //request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Content-Type", "application/json");
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(postData);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
